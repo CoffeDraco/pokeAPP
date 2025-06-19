@@ -1,20 +1,36 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Pokémons</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+  <ion-row>
+    <ion-col size="6" *ngFor="let poke of pokemons">
+      <ion-card [routerLink]="['/pokemon-details', poke.name]">
+        <img [src]="poke.image" alt="{{poke.name}}">
+        <ion-card-header>
+          <ion-card-title>{{ poke.name }}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-button expand="full" (click)="loadMore()">Carregar Mais</ion-button>
+
+
+  <ion-button expand="full" (click)="loadMore()">Carregar Mais</ion-button>
 </ion-content>
+<ion-item *ngFor="let poke of pokemons" [routerLink]="['/pokemon-details', poke.name]">
+  <ion-thumbnail slot="start">
+    <img [src]="poke.image" alt="{{poke.name}}">
+  </ion-thumbnail>
+  <ion-label>
+    {{ poke.name }}
+  </ion-label>
+  <ion-button (click)="toggleFavorite(poke.name)" fill="outline" slot="end">
+    {{ favoritesService.isFavorite(poke.name) ? '★ Favorito' : '☆ Favoritar' }}
+  </ion-button>
+</ion-item>
